@@ -1,4 +1,9 @@
 logic_gate_simulation
 =====================
 
-simulator version logic_gate
+CCU Software testing course final project
+simulator version
+
+Objective
+---------
+Build logic gate simulation class, and test them by course testing method.
