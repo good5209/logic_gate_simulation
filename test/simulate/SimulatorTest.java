@@ -39,7 +39,7 @@ public class SimulatorTest extends TestCase {
 		}
 	}
 	
-	public void testAddGateAction() {
+	public void testAddAction() {
 		Simulator sim = new Simulator();
 		assertEquals(false, sim.hasWork());
 		

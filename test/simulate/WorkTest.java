@@ -43,7 +43,7 @@ public class WorkTest extends TestCase {
 		assertEquals(3, work.getTime());
 	}
 	
-	public void testInvokeWork() {
+	public void testInvoke() {
 		try {
 			Work work = new Work(0) {
 				@Override
