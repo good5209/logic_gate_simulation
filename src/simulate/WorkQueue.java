@@ -7,7 +7,7 @@ import java.util.ListIterator;
  * work queue
  * collect and schedule simulator work
  */
-public class WorkQueue {
+class WorkQueue {
 	/*
 	 * work list
 	 * first element is biggest time work

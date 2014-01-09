@@ -1,7 +1,7 @@
 package simulate;
 
 @SuppressWarnings("serial")
-public class WorkException extends Exception {
+class WorkException extends Exception {
 	public WorkException() {}
 	
 	/**
