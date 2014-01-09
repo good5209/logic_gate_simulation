@@ -9,19 +9,36 @@ public class WorkQueueTest extends TestCase {
 	
 	public void testAdd() {
 		WorkQueue queue = new WorkQueue();
-		queue.add(null);
-		assertEquals(false, queue.hasWork());
+		try {
+			queue.add(null);
+			assertFalse("An WorkException should be thrown in WorkQueue", true);
+		} catch (WorkException e) {
+			assertFalse(false);
+		}
 		
-		queue.add(new Work(0) {
-			@Override
-			public void invokeWork() {}
-		});
-		assertEquals(true, queue.hasWork());
+		try {
+			queue.add(new Work(0) {
+				@Override
+				public void invokeWork() {}
+			});
+			queue.add(new Work(1) {
+				@Override
+				public void invokeWork() {}
+			});
+			assertTrue(true);
+		} catch (WorkException e) {
+			assertTrue("No WorkException should be thrown in WorkQueue", false);
+		}
 	}
 	
-	public void testPop() {
+	public void testPop() throws WorkException {
 		WorkQueue queue = new WorkQueue();
-		assertEquals(null, queue.pop());
+		try {
+			queue.pop();
+			assertFalse("An WorkException should be thrown in WorkQueue", true);
+		} catch (WorkException e) {
+			assertFalse(false);
+		}
 		
 		Work works[] = {
 			new Work(0) { // at 0
@@ -52,21 +69,28 @@ public class WorkQueueTest extends TestCase {
 		for (Work each : works) {
 			queue.add(each);
 		}
-		assertEquals(works[0], queue.pop());
-		assertEquals(works[2], queue.pop());
-		assertEquals(works[1], queue.pop());
-		assertEquals(works[3], queue.pop());
-		assertEquals(works[5], queue.pop());
-		assertEquals(works[4], queue.pop());
-		assertEquals(false, queue.hasWork());
+		try {
+			assertEquals(works[0], queue.pop());
+			assertEquals(works[2], queue.pop());
+			assertEquals(works[1], queue.pop());
+			assertEquals(works[3], queue.pop());
+			assertEquals(works[5], queue.pop());
+			assertEquals(works[4], queue.pop());
+			assertEquals(false, queue.hasWork());
+			assertTrue(true);
+		} catch (WorkException e) {
+			assertTrue("No WorkException should be thrown in WorkQueue", false);
+		}
 	}
 	
-	public void testNextTime() {
+	public void testNextTime() throws WorkException {
 		WorkQueue queue = new WorkQueue();
-		assertEquals(-1, queue.nextTime());
-		
-		queue.add(null);
-		assertEquals(-1, queue.nextTime());
+		try {
+			assertEquals(-1, queue.nextTime());
+			assertFalse("An WorkException should be thrown in WorkQueue", true);
+		} catch (WorkException e) {
+			assertFalse(false);
+		}
 		
 		queue.add(new Work(0) {
 			@Override
@@ -84,22 +108,23 @@ public class WorkQueueTest extends TestCase {
 			@Override
 			public void invokeWork() {}
 		});
-		assertEquals(0, queue.nextTime());
-		queue.pop();
-		assertEquals(0, queue.nextTime());
-		queue.pop();
-		assertEquals(1, queue.nextTime());
-		queue.pop();
-		assertEquals(2, queue.nextTime());
-		queue.pop();
-		assertEquals(-1, queue.nextTime());
+		try {
+			assertEquals(0, queue.nextTime());
+			queue.pop();
+			assertEquals(0, queue.nextTime());
+			queue.pop();
+			assertEquals(1, queue.nextTime());
+			queue.pop();
+			assertEquals(2, queue.nextTime());
+			queue.pop();
+			assertTrue(true);
+		} catch (WorkException e) {
+			assertTrue("No WorkException should be thrown in WorkQueue", false);
+		}
 	}
 	
-	public void testHasWork() {
+	public void testHasWork() throws WorkException {
 		WorkQueue queue = new WorkQueue();
-		assertEquals(false, queue.hasWork());
-		
-		queue.add(null);
 		assertEquals(false, queue.hasWork());
 		
 		queue.add(new Work(0) {
@@ -107,6 +132,7 @@ public class WorkQueueTest extends TestCase {
 			public void invokeWork() {}
 		});
 		assertEquals(true, queue.hasWork());
+		
 		queue.add(new Work(1) {
 			@Override
 			public void invokeWork() {}

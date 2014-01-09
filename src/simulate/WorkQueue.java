@@ -19,8 +19,8 @@ public class WorkQueue {
 	 * add work into queue
 	 * @param work
 	 */
-	public void add(Work work) {
-		if (work != null && work.getTime() >= 0) {
+	public void add(Work work) throws WorkException {
+		if (work != null) {
 			ListIterator<Work> iterator = queue.listIterator();
 			/*
 			 * usually work time is growing, seek insert point from big time
@@ -34,29 +34,31 @@ public class WorkQueue {
 				}
 			}
 			iterator.add(work);
+			return;
 		}
+		throw new WorkException("add work failure");
 	}
 	
 	/**
 	 * pop next invoke work
 	 * @return invoke work
 	 */
-	public Work pop() {
+	public Work pop() throws WorkException {
 		if (hasWork()) {
 			return queue.removeLast();
 		}
-		return null;
+		throw new WorkException("work queue is empty");
 	}
 	
 	/**
 	 * get next work invoke time
 	 * @return next invoke time
 	 */
-	public int nextTime() {
+	public int nextTime() throws WorkException {
 		if (hasWork()) {
 			return queue.getLast().getTime();
 		}
-		return -1;
+		throw new WorkException("work queue is empty");
 	}
 	
 	/**

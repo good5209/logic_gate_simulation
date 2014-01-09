@@ -4,13 +4,32 @@ import junit.framework.TestCase;
 
 public class WorkTest extends TestCase {
 	public void testWork() {
-		new Work(1) {
-			@Override
-			public void invokeWork() {}
-		};
+		try {
+			new Work(-1) {
+				@Override
+				public void invokeWork() {}
+			};
+			assertFalse("An WorkException should be thrown in Work", true);
+		} catch (WorkException e) {
+			assertFalse(false);
+		}
+		
+		try {
+			new Work(0) {
+				@Override
+				public void invokeWork() {}
+			};
+			new Work(1) {
+				@Override
+				public void invokeWork() {}
+			};
+			assertTrue(true);
+		} catch (WorkException e) {
+			assertTrue("No WorkException should be thrown in Work", false);
+		}
 	}
 	
-	public void testGetDelay() {
+	public void testGetTime() throws WorkException {
 		Work work = new Work(0) {
 			@Override
 			public void invokeWork() {}

@@ -33,13 +33,17 @@ public class Simulator {
 	 */
 	public void addGateAction(int delay, final GateAction action) throws SimulateException {
 		if (delay >= 0 && action != null) {
-			workQueue.add(new Work(time + delay) {
-				@Override
-				public void invokeWork() {
-					action.invokeAction();
-				}
-			});
-			return;
+			try {
+				workQueue.add(new Work(time + delay) {
+					@Override
+					public void invokeWork() {
+						action.invokeAction();
+					}
+				});
+				return;
+			} catch (WorkException e) {
+				e.printStackTrace();
+			}
 		}
 		throw new SimulateException("add gate action failure");
 	}
@@ -65,10 +69,15 @@ public class Simulator {
 	 */
 	public void next() {
 		if (hasWork()) {
-			Work work = workQueue.pop();
-			time = work.getTime();
-			System.out.println("Work at " + time);
-			work.invokeWork();
+			Work work;
+			try {
+				work = workQueue.pop();
+				time = work.getTime();
+				System.out.println("Work at " + time);
+				work.invokeWork();
+			} catch (WorkException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -92,11 +101,15 @@ public class Simulator {
 			int maxTime = time + limitTime;
 			System.out.println("=== Simulation start ===");
 			while (hasWork()) {
-				if (workQueue.nextTime() > maxTime) { // next work exceed time limit
-					time = maxTime;
-					break;
+				try {
+					if (workQueue.nextTime() > maxTime) { // next work exceed time limit
+						time = maxTime;
+						break;
+					}
+					next();
+				} catch (WorkException e) {
+					throw new SimulateException("runUntil internal error");
 				}
-				next();
 			}
 			if (hasWork()) {
 				System.out.println("*** Simulation suspend ***\n");
