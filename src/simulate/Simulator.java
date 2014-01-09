@@ -58,16 +58,6 @@ public class Simulator {
 	}
 	
 	/**
-	 * elapse simulator time, without simulate work action
-	 * @param elapseTime
-	 */
-	public void elapse(int elapseTime) {
-		if (elapseTime >= 0) {
-			time += elapseTime;
-		}
-	}
-	
-	/**
 	 * simulate next work
 	 */
 	public void next() {

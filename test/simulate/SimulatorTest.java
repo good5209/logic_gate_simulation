@@ -60,15 +60,6 @@ public class SimulatorTest extends TestCase {
 		assertEquals(0, sim.getTime());
 	}
 	
-	public void testElapse() {
-		Simulator sim = new Simulator();
-		assertEquals(0, sim.getTime());
-		sim.elapse(3);
-		assertEquals(3, sim.getTime());
-		sim.elapse(5);
-		assertEquals(8, sim.getTime());
-	}
-	
 	public void testNext() {
 		Simulator sim = new Simulator();
 		
