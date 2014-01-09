@@ -1,29 +1,39 @@
 package simulate;
 
-import java.util.Vector;
+import java.util.LinkedList;
+import java.util.ListIterator;
 
 /**
  * work queue
- * collocate and schedule simualtor work
+ * collect and schedule simulator work
  */
 public class WorkQueue {
-	private Vector<Work> queue = new Vector<Work>();
+	/*
+	 * work list
+	 * first element is biggest time work
+	 * last element is smallest time work
+	 */
+	private LinkedList<Work> queue = new LinkedList<Work>();
 	
 	/**
 	 * add work into queue
 	 * @param work
 	 */
 	public void add(Work work) {
-		if (work != null) {
-			for (int i = queue.size() - 1; i >= 0; i--) { // seek from queue tail
-				// new work should insert after previous or same time work
-				// later add work will cover previous work effect
-				if (queue.get(i).getTime() <= work.getTime()) {
-					queue.add(i + 1, work);
-					return;
+		if (work != null && work.getTime() >= 0) {
+			ListIterator<Work> iterator = queue.listIterator();
+			/*
+			 * usually work time is growing, seek insert point from big time
+			 * new work should invoke later then previous and same time work
+			 * it will cover previous work effect
+			 */
+			while (iterator.hasNext()) {
+				if (iterator.next().getTime() <= work.getTime()) {
+					iterator.previous(); // move cursor at insert point
+					break;
 				}
 			}
-			queue.add(0, work); // work smaller than whole queue, add to queue head
+			iterator.add(work);
 		}
 	}
 	
@@ -33,7 +43,7 @@ public class WorkQueue {
 	 */
 	public Work pop() {
 		if (hasWork()) {
-			return queue.remove(0);
+			return queue.removeLast();
 		}
 		return null;
 	}
@@ -44,7 +54,7 @@ public class WorkQueue {
 	 */
 	public int nextTime() {
 		if (hasWork()) {
-			return queue.firstElement().getTime();
+			return queue.getLast().getTime();
 		}
 		return -1;
 	}
