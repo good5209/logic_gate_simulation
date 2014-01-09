@@ -26,6 +26,8 @@ public class NotGateTest extends TestCase {
 			assertFalse(output.getSignal());
 		} catch (GateException e) {
 			assertTrue(false);
+		} catch (SimulateException e) {
+			assertTrue(false);
 		}
 		
 		try {
@@ -63,6 +65,8 @@ public class NotGateTest extends TestCase {
 			sim.runUntil(0);
 			sim.runUntil(1);
 		} catch (GateException e) {
+			assertTrue(false);
+		} catch (SimulateException e) {
 			assertTrue(false);
 		}
 	}

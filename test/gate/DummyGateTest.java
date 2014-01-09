@@ -26,6 +26,8 @@ public class DummyGateTest extends TestCase {
 			assertEquals(true, output.getSignal());
 		} catch (GateException e) {
 			assertTrue(false);
+		} catch (SimulateException e) {
+			assertTrue(false);
 		}
 		
 		try {

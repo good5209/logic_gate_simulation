@@ -68,6 +68,8 @@ public class RippleCarryAdderTest extends TestCase {
 			assertEquals(false, carry.getSignal());
 		} catch (GateException e) {
 			assertTrue(false);
+		} catch (SimulateException e) {
+			assertTrue(false);
 		}
 		
 		try {
@@ -144,6 +146,8 @@ public class RippleCarryAdderTest extends TestCase {
 			sim.run();
 			assertEquals(1111111110L, WireArray.getValue(sums));
 		} catch (GateException e) {
+			assertTrue(false);
+		} catch (SimulateException e) {
 			assertTrue(false);
 		}
 	}

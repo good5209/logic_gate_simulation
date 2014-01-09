@@ -37,6 +37,8 @@ public class OrGateTest extends TestCase {
 			assertEquals(true, output.getSignal());
 		} catch (GateException e) {
 			assertTrue(false);
+		} catch (SimulateException e) {
+			assertTrue(false);
 		}
 		
 		try {

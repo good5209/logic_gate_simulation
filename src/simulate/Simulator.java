@@ -18,10 +18,12 @@ public class Simulator {
 	 * add simulation component
 	 * @param component
 	 */
-	public void addComponent(SimulateComponent component) {
+	public void addComponent(SimulateComponent component) throws SimulateException {
 		if (component != null) {
 			component.addOnSimulator(this);
+			return;
 		}
+		throw new SimulateException("add component is null");
 	}
 	
 	/**
@@ -29,7 +31,7 @@ public class Simulator {
 	 * @param delay invoke delay time
 	 * @param action invoke action
 	 */
-	public void addGateAction(int delay, final GateAction action) {
+	public void addGateAction(int delay, final GateAction action) throws SimulateException {
 		if (delay >= 0 && action != null) {
 			workQueue.add(new Work(time + delay) {
 				@Override
@@ -37,8 +39,9 @@ public class Simulator {
 					action.invokeAction();
 				}
 			});
+			return;
 		}
-		// TODO add exception
+		throw new SimulateException("add gate action failure");
 	}
 	
 	/**
@@ -84,7 +87,7 @@ public class Simulator {
 	 * start simulator until limit time
 	 * @param limitTime
 	 */
-	public void runUntil(int limitTime) {
+	public void runUntil(int limitTime) throws SimulateException {
 		if (limitTime >= 0) {
 			int maxTime = time + limitTime;
 			System.out.println("=== Simulation start ===");
@@ -100,6 +103,8 @@ public class Simulator {
 			} else {
 				System.out.println("=== Simulation finish ===\n");
 			}
+			return;
 		}
+		throw new SimulateException("runUntil time less than zero");
 	}
 }

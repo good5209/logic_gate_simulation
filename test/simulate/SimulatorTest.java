@@ -12,36 +12,71 @@ public class SimulatorTest extends TestCase {
 		Simulator sim = new Simulator();
 		assertEquals(false, sim.hasWork());
 		
-		sim.addComponent(null);
-		assertEquals(false, sim.hasWork());
+		try {
+			sim.addComponent(null);
+			assertFalse("An SimulateException should be thrown in Simulator", true);
+		} catch (SimulateException e) {
+			assertFalse(false);
+		}
 		
-		sim.addComponent(new SimulateComponent() {
-			@Override
-			public void addOnSimulator(Simulator simulator) {
-				simulator.addGateAction(0, new GateAction() {
-					@Override
-					public void invokeAction() {}
-				});
-			}
-		});
-		assertEquals(true, sim.hasWork());
+		try {
+			sim.addComponent(new SimulateComponent() {
+				@Override
+				public void addOnSimulator(Simulator simulator) {
+					try {
+						simulator.addGateAction(0, new GateAction() {
+							@Override
+							public void invokeAction() {}
+						});
+						assertTrue(true);
+					} catch (SimulateException e) {
+						assertTrue("No SimulateException should be thrown in Simulator", false);
+					}
+				}
+			});
+			assertTrue(true);
+		} catch (SimulateException e) {
+			assertTrue("No SimulateException should be thrown in Simulator", false);
+		}
 	}
 	
-	public void testAddWork() {
+	public void testAddGateAction() {
 		Simulator sim = new Simulator();
 		assertEquals(false, sim.hasWork());
 		
-		sim.addGateAction(0, null);
-		assertEquals(false, sim.hasWork());
+		try {
+			sim.addGateAction(0, null);
+			assertFalse("An SimulateException should be thrown in Simulator", true);
+		} catch (SimulateException e) {
+			assertFalse(false);
+		}
 		
-		sim.addGateAction(0, new GateAction() {
-			@Override
-			public void invokeAction() {}
-		});
-		assertEquals(true, sim.hasWork());
+		try {
+			sim.addGateAction(-1, new GateAction() {
+				@Override
+				public void invokeAction() {}
+			});
+			assertFalse("An SimulateException should be thrown in Simulator", true);
+		} catch (SimulateException e) {
+			assertFalse(false);
+		}
+		
+		try {
+			sim.addGateAction(0, new GateAction() {
+				@Override
+				public void invokeAction() {}
+			});
+			sim.addGateAction(1, new GateAction() {
+				@Override
+				public void invokeAction() {}
+			});
+			assertTrue(true);
+		} catch (SimulateException e) {
+			assertTrue("No SimulateException should be thrown in Simulator", false);
+		}
 	}
 	
-	public void testHasWork() {
+	public void testHasWork() throws SimulateException {
 		Simulator sim = new Simulator();
 		assertEquals(false, sim.hasWork());
 		
@@ -60,7 +95,7 @@ public class SimulatorTest extends TestCase {
 		assertEquals(0, sim.getTime());
 	}
 	
-	public void testNext() {
+	public void testNext() throws SimulateException {
 		Simulator sim = new Simulator();
 		
 		assertEquals(0, sim.getTime());
@@ -89,7 +124,7 @@ public class SimulatorTest extends TestCase {
 		assertEquals(11, sim.getTime());
 	}
 	
-	public void testRun() {
+	public void testRun() throws SimulateException {
 		Simulator sim = new Simulator();
 		sim.addGateAction(1, new GateAction() {
 			@Override
@@ -110,7 +145,7 @@ public class SimulatorTest extends TestCase {
 		assertEquals(4, sim.getTime());
 	}
 	
-	public void testRunUntil() {
+	public void testRunUntil() throws SimulateException {
 		Simulator sim = new Simulator();
 		sim.addGateAction(1, new GateAction() {
 			@Override
@@ -124,27 +159,30 @@ public class SimulatorTest extends TestCase {
 			@Override
 			public void invokeAction() {}
 		});
-		sim.runUntil(0);
-		assertEquals(0, sim.getTime());
-		sim.runUntil(2);
-		assertEquals(2, sim.getTime());
-		sim.runUntil(0);
-		assertEquals(2, sim.getTime());
-		sim.runUntil(2);
-		assertEquals(3, sim.getTime());
+		try {
+			sim.runUntil(0);
+			assertEquals(0, sim.getTime());
+			sim.runUntil(2);
+			assertEquals(2, sim.getTime());
+			sim.runUntil(0);
+			assertEquals(2, sim.getTime());
+			sim.runUntil(2);
+			assertEquals(3, sim.getTime());
+			assertTrue(true);
+		} catch (SimulateException e) {
+			assertTrue("No SimulateException should be thrown in Simulator", false);
+		}
 		
 		sim = new Simulator();
-		sim.runUntil(-1);
-		assertEquals(0, sim.getTime());
 		sim.addGateAction(1, new GateAction() {
 			@Override
 			public void invokeAction() {}
 		});
-		sim.runUntil(-1);
-		assertEquals(0, sim.getTime());
-		sim.runUntil(2);
-		assertEquals(1, sim.getTime());
-		sim.runUntil(-1);
-		assertEquals(1, sim.getTime());
+		try {
+			sim.runUntil(-1);
+			assertFalse("An SimulateException should be thrown in Simulator", true);
+		} catch (SimulateException e) {
+			assertFalse(false);
+		}
 	}
 }

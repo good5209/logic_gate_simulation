@@ -38,6 +38,8 @@ public class WireTest extends TestCase {
 			assertEquals(true, outputWire.getSignal());
 		} catch (GateException e) {
 			assertTrue(false);
+		} catch (SimulateException e) {
+			assertTrue(false);
 		}
 	}
 	

@@ -1,5 +1,6 @@
 package gate;
 
+import simulate.SimulateException;
 import simulate.Simulator;
 import wire.Wire;
 
@@ -36,13 +37,17 @@ public class DummyGate implements Gate {
 	@Override
 	public void wireSignalChanged() {
 		if (simulator != null) {
-			simulator.addGateAction(DELAY_TIME, new GateAction() {
-				private boolean result = input.getSignal(); // save now result
-				@Override
-				public void invokeAction() {
-					output.setSignal(result);
-				}
-			});
+			try {
+				simulator.addGateAction(DELAY_TIME, new GateAction() {
+					private boolean result = input.getSignal(); // save now result
+					@Override
+					public void invokeAction() {
+						output.setSignal(result);
+					}
+				});
+			} catch (SimulateException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }
