@@ -36,7 +36,7 @@ public class Simulator {
 			try {
 				workQueue.add(new Work(time + delay) {
 					@Override
-					public void invokeWork() {
+					public void invoke() {
 						action.invokeAction();
 					}
 				});
@@ -74,7 +74,7 @@ public class Simulator {
 				work = workQueue.pop();
 				time = work.getTime();
 				System.out.println("Work at " + time);
-				work.invokeWork();
+				work.invoke();
 			} catch (WorkException e) {
 				e.printStackTrace();
 			}

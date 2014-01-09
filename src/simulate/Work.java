@@ -27,7 +27,7 @@ abstract class Work {
 	}
 	
 	/**
-	 * work action
+	 * invoke work action
 	 */
-	abstract public void invokeWork();
+	abstract public void invoke();
 }
