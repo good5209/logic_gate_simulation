@@ -19,11 +19,11 @@ public class WorkQueueTest extends TestCase {
 		try {
 			queue.add(new Work(0) {
 				@Override
-				public void invokeWork() {}
+				public void invoke() {}
 			});
 			queue.add(new Work(1) {
 				@Override
-				public void invokeWork() {}
+				public void invoke() {}
 			});
 			assertTrue(true);
 		} catch (WorkException e) {
@@ -43,27 +43,27 @@ public class WorkQueueTest extends TestCase {
 		Work works[] = {
 			new Work(0) { // at 0
 				@Override
-				public void invokeWork() {}
+				public void invoke() {}
 			},
 			new Work(2) { // at 2
 				@Override
-				public void invokeWork() {}
+				public void invoke() {}
 			},
 			new Work(1) { // at 1
 				@Override
-				public void invokeWork() {}
+				public void invoke() {}
 			},
 			new Work(2) { // at 3
 				@Override
-				public void invokeWork() {}
+				public void invoke() {}
 			},
 			new Work(3) { // at 5
 				@Override
-				public void invokeWork() {}
+				public void invoke() {}
 			},
 			new Work(2) { // at 4
 				@Override
-				public void invokeWork() {}
+				public void invoke() {}
 			}
 		};
 		for (Work each : works) {
@@ -94,19 +94,19 @@ public class WorkQueueTest extends TestCase {
 		
 		queue.add(new Work(0) {
 			@Override
-			public void invokeWork() {}
+			public void invoke() {}
 		});
 		queue.add(new Work(0) {
 			@Override
-			public void invokeWork() {}
+			public void invoke() {}
 		});
 		queue.add(new Work(1) {
 			@Override
-			public void invokeWork() {}
+			public void invoke() {}
 		});
 		queue.add(new Work(2) {
 			@Override
-			public void invokeWork() {}
+			public void invoke() {}
 		});
 		try {
 			assertEquals(0, queue.nextTime());
@@ -129,13 +129,13 @@ public class WorkQueueTest extends TestCase {
 		
 		queue.add(new Work(0) {
 			@Override
-			public void invokeWork() {}
+			public void invoke() {}
 		});
 		assertEquals(true, queue.hasWork());
 		
 		queue.add(new Work(1) {
 			@Override
-			public void invokeWork() {}
+			public void invoke() {}
 		});
 		assertEquals(true, queue.hasWork());
 		

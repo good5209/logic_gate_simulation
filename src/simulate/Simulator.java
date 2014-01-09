@@ -1,7 +1,5 @@
 package simulate;
 
-import gate.GateAction;
-
 /**
  * logic component simulator
  */
@@ -27,17 +25,17 @@ public class Simulator {
 	}
 	
 	/**
-	 * add gate action
+	 * add simulation component action
 	 * @param delay invoke delay time
 	 * @param action invoke action
 	 */
-	public void addGateAction(int delay, final GateAction action) throws SimulateException {
+	public void addAction(int delay, final SimulateAction action) throws SimulateException {
 		if (delay >= 0 && action != null) {
 			try {
 				workQueue.add(new Work(time + delay) {
 					@Override
 					public void invoke() {
-						action.invokeAction();
+						action.invoke();
 					}
 				});
 				return;

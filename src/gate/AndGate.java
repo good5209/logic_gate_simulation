@@ -1,7 +1,8 @@
 package gate;
 
-import simulate.SimulateException;
 import simulate.Simulator;
+import simulate.SimulateAction;
+import simulate.SimulateException;
 import wire.Wire;
 
 public class AndGate implements Gate {
@@ -38,10 +39,10 @@ public class AndGate implements Gate {
 	public void wireSignalChanged() {
 		if (simulator != null) {
 			try {
-				simulator.addGateAction(DELAY_TIME, new GateAction() {
+				simulator.addAction(DELAY_TIME, new SimulateAction() {
 					private boolean result = input1.getSignal() && input2.getSignal(); // save now result
 					@Override
-					public void invokeAction() {
+					public void invoke() {
 						output.setSignal(result);
 					}
 				});

@@ -60,7 +60,7 @@ public class WireTest extends TestCase {
 		wire.setSignal(false);
 	}
 	
-	public void testWireOutputAttach() {
+	public void testWireAttach() {
 		try {
 			Wire wire = new Wire();
 			new DummyGate(new Wire(), wire);

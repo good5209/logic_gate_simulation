@@ -1,10 +1,11 @@
 package gate;
 
-import simulate.*;
+import simulate.SimulateComponent;
 import wire.WireListener;
 
 /**
- * attached with wires, obtain and compute one or more input signal, produce one output signal
+ * a kind of simulate component
+ * which is attach wires and compute one or some input signal, produce one output signal
  */
 public interface Gate extends SimulateComponent, WireListener {
 	

@@ -2,8 +2,8 @@ package gate;
 
 import java.util.LinkedList;
 
-import simulate.SimulateComponent;
 import simulate.Simulator;
+import simulate.SimulateComponent;
 import wire.Wire;
 
 public class XorGate implements Gate {

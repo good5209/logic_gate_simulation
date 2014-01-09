@@ -1,7 +1,7 @@
 package module;
 
-import simulate.SimulateComponent;
 import simulate.Simulator;
+import simulate.SimulateComponent;
 import gate.*;
 import wire.Wire;
 

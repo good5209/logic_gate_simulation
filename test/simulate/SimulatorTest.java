@@ -1,6 +1,5 @@
 package simulate;
 
-import gate.GateAction;
 import junit.framework.TestCase;
 
 public class SimulatorTest extends TestCase {
@@ -24,9 +23,9 @@ public class SimulatorTest extends TestCase {
 				@Override
 				public void addOnSimulator(Simulator simulator) {
 					try {
-						simulator.addGateAction(0, new GateAction() {
+						simulator.addAction(0, new SimulateAction() {
 							@Override
-							public void invokeAction() {}
+							public void invoke() {}
 						});
 						assertTrue(true);
 					} catch (SimulateException e) {
@@ -45,16 +44,16 @@ public class SimulatorTest extends TestCase {
 		assertEquals(false, sim.hasWork());
 		
 		try {
-			sim.addGateAction(0, null);
+			sim.addAction(0, null);
 			assertFalse("An SimulateException should be thrown in Simulator", true);
 		} catch (SimulateException e) {
 			assertFalse(false);
 		}
 		
 		try {
-			sim.addGateAction(-1, new GateAction() {
+			sim.addAction(-1, new SimulateAction() {
 				@Override
-				public void invokeAction() {}
+				public void invoke() {}
 			});
 			assertFalse("An SimulateException should be thrown in Simulator", true);
 		} catch (SimulateException e) {
@@ -62,13 +61,13 @@ public class SimulatorTest extends TestCase {
 		}
 		
 		try {
-			sim.addGateAction(0, new GateAction() {
+			sim.addAction(0, new SimulateAction() {
 				@Override
-				public void invokeAction() {}
+				public void invoke() {}
 			});
-			sim.addGateAction(1, new GateAction() {
+			sim.addAction(1, new SimulateAction() {
 				@Override
-				public void invokeAction() {}
+				public void invoke() {}
 			});
 			assertTrue(true);
 		} catch (SimulateException e) {
@@ -80,9 +79,9 @@ public class SimulatorTest extends TestCase {
 		Simulator sim = new Simulator();
 		assertEquals(false, sim.hasWork());
 		
-		sim.addGateAction(0, new GateAction() {
+		sim.addAction(0, new SimulateAction() {
 			@Override
-			public void invokeAction() {}
+			public void invoke() {}
 		});
 		assertEquals(true, sim.hasWork());
 		
@@ -102,23 +101,23 @@ public class SimulatorTest extends TestCase {
 		sim.next();
 		assertEquals(0, sim.getTime());
 		
-		sim.addGateAction(1, new GateAction() {
+		sim.addAction(1, new SimulateAction() {
 			@Override
-			public void invokeAction() {}
+			public void invoke() {}
 		});
 		sim.next();
 		assertEquals(1, sim.getTime());
 		
-		sim.addGateAction(3, new GateAction() {
+		sim.addAction(3, new SimulateAction() {
 			@Override
-			public void invokeAction() {}
+			public void invoke() {}
 		});
 		sim.next();
 		assertEquals(4, sim.getTime());
 		
-		sim.addGateAction(7, new GateAction() {
+		sim.addAction(7, new SimulateAction() {
 			@Override
-			public void invokeAction() {}
+			public void invoke() {}
 		});
 		sim.next();
 		assertEquals(11, sim.getTime());
@@ -126,20 +125,20 @@ public class SimulatorTest extends TestCase {
 	
 	public void testRun() throws SimulateException {
 		Simulator sim = new Simulator();
-		sim.addGateAction(1, new GateAction() {
+		sim.addAction(1, new SimulateAction() {
 			@Override
-			public void invokeAction() {}
+			public void invoke() {}
 		});
 		sim.run();
 		assertEquals(1, sim.getTime());
 		
-		sim.addGateAction(2, new GateAction() {
+		sim.addAction(2, new SimulateAction() {
 			@Override
-			public void invokeAction() {}
+			public void invoke() {}
 		});
-		sim.addGateAction(3, new GateAction() {
+		sim.addAction(3, new SimulateAction() {
 			@Override
-			public void invokeAction() {}
+			public void invoke() {}
 		});
 		sim.run();
 		assertEquals(4, sim.getTime());
@@ -147,17 +146,17 @@ public class SimulatorTest extends TestCase {
 	
 	public void testRunUntil() throws SimulateException {
 		Simulator sim = new Simulator();
-		sim.addGateAction(1, new GateAction() {
+		sim.addAction(1, new SimulateAction() {
 			@Override
-			public void invokeAction() {}
+			public void invoke() {}
 		});
-		sim.addGateAction(2, new GateAction() {
+		sim.addAction(2, new SimulateAction() {
 			@Override
-			public void invokeAction() {}
+			public void invoke() {}
 		});
-		sim.addGateAction(3, new GateAction() {
+		sim.addAction(3, new SimulateAction() {
 			@Override
-			public void invokeAction() {}
+			public void invoke() {}
 		});
 		try {
 			sim.runUntil(0);
@@ -174,9 +173,9 @@ public class SimulatorTest extends TestCase {
 		}
 		
 		sim = new Simulator();
-		sim.addGateAction(1, new GateAction() {
+		sim.addAction(1, new SimulateAction() {
 			@Override
-			public void invokeAction() {}
+			public void invoke() {}
 		});
 		try {
 			sim.runUntil(-1);

@@ -1,7 +1,7 @@
 package gate;
 
-import simulate.SimulateComponent;
 import simulate.Simulator;
+import simulate.SimulateComponent;
 import wire.Wire;
 
 public class NorGate implements Gate {

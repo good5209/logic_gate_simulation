@@ -2,8 +2,8 @@ package module;
 
 import java.util.LinkedList;
 
-import simulate.SimulateComponent;
 import simulate.Simulator;
+import simulate.SimulateComponent;
 import gate.GateException;
 import wire.Wire;
 
