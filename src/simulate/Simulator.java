@@ -32,12 +32,7 @@ public class Simulator {
 	public void addAction(int delay, final SimulateAction action) throws SimulateException {
 		if (delay >= 0 && action != null) {
 			try {
-				workQueue.add(new Work(time + delay) {
-					@Override
-					public void invoke() {
-						action.invoke();
-					}
-				});
+				workQueue.add(new Work(time + delay, action));
 				return;
 			} catch (WorkException e) {
 				e.printStackTrace();

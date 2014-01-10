@@ -17,14 +17,14 @@ public class WorkQueueTest extends TestCase {
 		}
 		
 		try {
-			queue.add(new Work(0) {
+			queue.add(new Work(0, new SimulateAction() {
 				@Override
 				public void invoke() {}
-			});
-			queue.add(new Work(1) {
+			}));
+			queue.add(new Work(1, new SimulateAction() {
 				@Override
 				public void invoke() {}
-			});
+			}));
 			assertTrue(true);
 		} catch (WorkException e) {
 			assertTrue("No WorkException should be thrown in WorkQueue", false);
@@ -41,30 +41,30 @@ public class WorkQueueTest extends TestCase {
 		}
 		
 		Work works[] = {
-			new Work(0) { // at 0
+			new Work(0, new SimulateAction() { // at 0
 				@Override
 				public void invoke() {}
-			},
-			new Work(2) { // at 2
+			}),
+			new Work(2, new SimulateAction() { // at 2
 				@Override
 				public void invoke() {}
-			},
-			new Work(1) { // at 1
+			}),
+			new Work(1, new SimulateAction() { // at 1
 				@Override
 				public void invoke() {}
-			},
-			new Work(2) { // at 3
+			}),
+			new Work(2, new SimulateAction() { // at 3
 				@Override
 				public void invoke() {}
-			},
-			new Work(3) { // at 5
+			}),
+			new Work(3, new SimulateAction() { // at 5
 				@Override
 				public void invoke() {}
-			},
-			new Work(2) { // at 4
+			}),
+			new Work(2, new SimulateAction() { // at 4
 				@Override
 				public void invoke() {}
-			}
+			})
 		};
 		for (Work each : works) {
 			queue.add(each);
@@ -92,22 +92,22 @@ public class WorkQueueTest extends TestCase {
 			assertFalse(false);
 		}
 		
-		queue.add(new Work(0) {
+		queue.add(new Work(0, new SimulateAction() {
 			@Override
 			public void invoke() {}
-		});
-		queue.add(new Work(0) {
+		}));
+		queue.add(new Work(0, new SimulateAction() {
 			@Override
 			public void invoke() {}
-		});
-		queue.add(new Work(1) {
+		}));
+		queue.add(new Work(1, new SimulateAction() {
 			@Override
 			public void invoke() {}
-		});
-		queue.add(new Work(2) {
+		}));
+		queue.add(new Work(2, new SimulateAction() {
 			@Override
 			public void invoke() {}
-		});
+		}));
 		try {
 			assertEquals(0, queue.nextTime());
 			queue.pop();
@@ -127,16 +127,16 @@ public class WorkQueueTest extends TestCase {
 		WorkQueue queue = new WorkQueue();
 		assertEquals(false, queue.hasWork());
 		
-		queue.add(new Work(0) {
+		queue.add(new Work(0, new SimulateAction() {
 			@Override
 			public void invoke() {}
-		});
+		}));
 		assertEquals(true, queue.hasWork());
 		
-		queue.add(new Work(1) {
+		queue.add(new Work(1, new SimulateAction() {
 			@Override
 			public void invoke() {}
-		});
+		}));
 		assertEquals(true, queue.hasWork());
 		
 		queue.pop();

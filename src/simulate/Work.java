@@ -3,16 +3,19 @@ package simulate;
 /**
  * representation simulation event
  */
-abstract class Work {
+class Work {
 	private int time;
+	private SimulateAction action;
 	
 	/**
-	 * work invoke at time
+	 * work, invoke action at time
 	 * @param time
+	 * @param action
 	 */
-	public Work(int time) throws WorkException {
-		if (time >= 0) {
+	public Work(int time, SimulateAction action) throws WorkException {
+		if (time >= 0 && action != null) {
 			this.time = time;
+			this.action = action;
 			return;
 		}
 		throw new WorkException("work time less than zero");
@@ -27,7 +30,9 @@ abstract class Work {
 	}
 	
 	/**
-	 * invoke work action
+	 * invoke action
 	 */
-	abstract public void invoke();
+	public void invoke() {
+		action.invoke();
+	}
 }
