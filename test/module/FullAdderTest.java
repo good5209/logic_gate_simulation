@@ -8,7 +8,7 @@ import wire.*;
 
 public class FullAdderTest extends TestCase {
 
-	public void testFullAdder() {
+	public void testFullAdder() throws WireException {
 		try {
 			Simulator sim = new Simulator();
 			Wire input1 = new Wire("input1");

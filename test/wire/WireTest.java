@@ -2,7 +2,6 @@ package wire;
 
 import junit.framework.TestCase;
 
-import simulate.*;
 import gate.*;
 
 public class WireTest extends TestCase {
@@ -15,48 +14,43 @@ public class WireTest extends TestCase {
 		assertEquals("Test wire", new Wire("Test wire").getName());
 	}
 	
-	public void testSetSignal() {
-		Wire w = new Wire();
-		assertEquals(false, w.getSignal()); // default signal
-		w.setSignal(true);
-		assertEquals(true, w.getSignal());
-		w.setSignal(false);
-		assertEquals(false, w.getSignal());
-	}
-
-	public void testGetSignal() {
+	public void testSetAndGetSignal() {
 		Wire wire = new Wire();
+		assertEquals(false, wire.getSignal()); // default signal
+		wire.setSignal(true);
+		assertEquals(true, wire.getSignal());
+		wire.setSignal(false);
 		assertEquals(false, wire.getSignal());
-		try {
-			Simulator sim = new Simulator();
-			Wire inputWire = new Wire();
-			Wire outputWire = new Wire();
-			sim.addComponent(new DummyGate(inputWire, outputWire));
-			inputWire.setSignal(true);
-			
-			sim.run();
-			assertEquals(true, outputWire.getSignal());
-		} catch (GateException e) {
-			assertTrue(false);
-		} catch (SimulateException e) {
-			assertTrue(false);
-		}
 	}
 	
 	public void testListenSignal() {
 		final Wire wire = new Wire();
+		try {
+			wire.listenSignal(null);
+			assertFalse("An WireException should be thrown in listenSignal", true);
+		} catch (WireException e) {
+			assertFalse(false);
+		}
+		
 		WireListener listener = new WireListener() {
 			boolean lastSignal = wire.getSignal();
 			
 			@Override
 			public void wireSignalChanged() {
-				assertNotSame(lastSignal, wire.getSignal()); // different with last changed signal
+				assertNotSame("when listener notified, signal should difference with last notify", lastSignal, wire.getSignal());
 				lastSignal = wire.getSignal();
 			}
 		};
-		wire.listenSignal(listener);
+		try {
+			wire.listenSignal(listener);
+			assertTrue(true);
+		} catch (WireException e) {
+			assertTrue("No WireException should be thrown in listenSignal", false);
+		}
 		wire.setSignal(false);
 		wire.setSignal(true);
+		wire.setSignal(true);
+		wire.setSignal(false);
 		wire.setSignal(false);
 	}
 	

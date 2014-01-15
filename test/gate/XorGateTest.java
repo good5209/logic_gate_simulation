@@ -7,7 +7,7 @@ import wire.*;
 
 public class XorGateTest extends TestCase {
 
-	public void testXorGate() {
+	public void testXorGate() throws WireException {
 		try {
 			Simulator sim = new Simulator();
 			Wire input1 = new Wire("input1");

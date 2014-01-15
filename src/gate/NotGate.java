@@ -4,6 +4,7 @@ import simulate.Simulator;
 import simulate.SimulateAction;
 import simulate.SimulateException;
 import wire.Wire;
+import wire.WireException;
 
 /**
  * obtain one input signal, and produce "or" signal to output wire
@@ -22,7 +23,11 @@ public class NotGate implements Gate {
 	public NotGate(Wire input, Wire output) throws GateException {
 		if (input != null && output != null) {
 			this.input = input;
-			this.input.listenSignal(this);
+			try {
+				this.input.listenSignal(this);
+			} catch (WireException e) {
+				e.printStackTrace();
+			}
 			this.output = output;
 			return;
 		}

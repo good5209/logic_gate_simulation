@@ -6,12 +6,12 @@ public class WireArray {
 	/**
 	 * initial wire array
 	 */
-	public static Wire[] wireArray(int number) {
+	public static Wire[] wireArray(int number) throws WireException {
 		return wireArray(number, null);
 	}
 	
-	public static Wire[] wireArray(int number, String name) {
-		if (number > 0) {
+	public static Wire[] wireArray(int number, String name) throws WireException {
+		if (number > 0 && number <= Long.SIZE) {
 			Wire[] result = new Wire[number];
 			if (name != null) {
 				for (int i = 0; i < result.length; i++) {
@@ -21,7 +21,7 @@ public class WireArray {
 			setValue(0, result); // initial value
 			return result;
 		}
-		return null;
+		throw new WireException("wire array length is invalid");
 	}
 	
 	/**
@@ -29,7 +29,7 @@ public class WireArray {
 	 * first is LSB, last is MSB
 	 */
 	// TODO may support BigInteger
-	public static void setValue(long value, Wire[] wires) throws NumberFormatException {
+	public static void setValue(long value, Wire[] wires) throws WireException {
 		if (wires != null) {
 			boolean[] bit = longToBit(value, wires.length);
 			for (int i = 0; i < bit.length; i++) {
@@ -40,7 +40,7 @@ public class WireArray {
 			}
 			return;
 		}
-		throw new NumberFormatException();
+		throw new WireException("wires is null");
 	}
 	
 	/**
@@ -48,7 +48,7 @@ public class WireArray {
 	 * first is LSB, last is MSB
 	 */
 	// TODO may support BigInteger
-	public static long getValue(Wire[] wires) throws NumberFormatException {
+	public static long getValue(Wire[] wires) throws WireException {
 		if (wires != null) {
 			boolean[] bit = new boolean[wires.length];
 			for (int i = 0; i < bit.length; i++) {
@@ -56,14 +56,14 @@ public class WireArray {
 			}
 			return bitToLong(bit);
 		}
-		throw new NumberFormatException();
+		throw new WireException("wires is null");
 	}
 	
 	/*
 	 * TODO need two complete number to support negative
 	 * http://zh.wikipedia.org/zh-tw/%E4%BA%8C%E8%A3%9C%E6%95%B8
 	 */
-	private static boolean[] longToBit(long value, int num) throws NumberFormatException {
+	private static boolean[] longToBit(long value, int num) throws WireException {
 		int valueBit = 0;
 		long temp = Math.abs(value);
 		while (temp != 0L) {
@@ -71,7 +71,7 @@ public class WireArray {
 			valueBit++;
 		}
 		if (valueBit > num) {
-			throw new NumberFormatException();
+			throw new WireException("value need more bits to representation");
 		}
 		
 		boolean[] result = new boolean[num];
@@ -82,8 +82,8 @@ public class WireArray {
 	}
 	
 	// TODO need two complete number to support negative
-	private static long bitToLong(boolean[] bit) throws NumberFormatException {
-		if (bit != null && bit.length > 0 && bit.length <= Long.SIZE) { // bit num bigger then long
+	private static long bitToLong(boolean[] bit) throws WireException {
+		if (bit != null && bit.length > 0 && bit.length <= Long.SIZE) { // bit number bigger then long
 			long result = 0L;
 			for (int i = 0; i < bit.length; i++) {
 				if (bit[i]) {
@@ -92,6 +92,6 @@ public class WireArray {
 			}
 			return result;
 		}
-		throw new NumberFormatException();
+		throw new WireException("value too big");
 	}
 }

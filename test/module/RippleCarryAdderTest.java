@@ -8,7 +8,7 @@ import wire.*;
 
 public class RippleCarryAdderTest extends TestCase {
 
-	public void testRippleCarryAdder() {
+	public void testRippleCarryAdder() throws WireException {
 		try {
 			Simulator sim = new Simulator();
 			Wire[] as = {new Wire("a1"), new Wire("a2"), new Wire("a3"), new Wire("a4")};
@@ -129,7 +129,7 @@ public class RippleCarryAdderTest extends TestCase {
 		}
 	}
 	
-	public void testBigNumber() {
+	public void testBigNumber() throws WireException {
 		try {
 			Simulator sim = new Simulator();
 			Wire[] as = WireArray.wireArray(32, "a");

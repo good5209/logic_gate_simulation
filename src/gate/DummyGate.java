@@ -4,6 +4,7 @@ import simulate.Simulator;
 import simulate.SimulateAction;
 import simulate.SimulateException;
 import wire.Wire;
+import wire.WireException;
 
 /**
  * simply redirect input signal to output wire
@@ -22,7 +23,11 @@ public class DummyGate implements Gate {
 	public DummyGate(Wire input, Wire output) throws GateException {
 		if (input != null && output != null) {
 			this.input = input;
-			input.listenSignal(this);
+			try {
+				input.listenSignal(this);
+			} catch (WireException e) {
+				e.printStackTrace();
+			}
 			this.output = output;
 			return;
 		}

@@ -4,6 +4,7 @@ import simulate.Simulator;
 import simulate.SimulateAction;
 import simulate.SimulateException;
 import wire.Wire;
+import wire.WireException;
 
 public class AndGate implements Gate {
 	public static int DELAY_TIME = 3;
@@ -21,8 +22,12 @@ public class AndGate implements Gate {
 		if (input1 != null && input2 != null && output != null) {
 			this.input1 = input1;
 			this.input2 = input2;
-			this.input1.listenSignal(this);
-			this.input2.listenSignal(this);
+			try {
+				this.input1.listenSignal(this);
+				this.input2.listenSignal(this);
+			} catch (WireException e) {
+				e.printStackTrace();
+			}
 			this.output = output;
 			return;
 		}

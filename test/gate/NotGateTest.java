@@ -7,7 +7,7 @@ import wire.*;
 
 public class NotGateTest extends TestCase {
 
-	public void testNotGate() {
+	public void testNotGate() throws WireException {
 		try {
 			Simulator sim = new Simulator();
 			
@@ -52,7 +52,7 @@ public class NotGateTest extends TestCase {
 		}
 	}
 	
-	public void testLoopNotGate() {
+	public void testLoopNotGate() throws WireException {
 		try {
 			Simulator sim = new Simulator();
 			

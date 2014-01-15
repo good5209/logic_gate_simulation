@@ -50,11 +50,15 @@ public class Wire {
 	 * add observe this wire listener
 	 * @param listener
 	 */
-	public void listenSignal(WireListener listener) {
-		if (listeners == null) {
-			listeners = new LinkedList<WireListener>();
+	public void listenSignal(WireListener listener) throws WireException {
+		if (listener != null) {
+			if (listeners == null) {
+				listeners = new LinkedList<WireListener>();
+			}
+			listeners.add(listener);
+			return;
 		}
-		listeners.add(listener);
+		throw new WireException("wire listener is null");
 	}
 	
 	/**

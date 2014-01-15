@@ -7,7 +7,7 @@ import wire.*;
 
 public class OrGateTest extends TestCase {
 
-	public void testOrGate() {
+	public void testOrGate() throws WireException {
 		try {
 			Simulator sim = new Simulator();
 			Wire input1 = new Wire("input1");

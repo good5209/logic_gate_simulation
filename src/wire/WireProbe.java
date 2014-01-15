@@ -6,9 +6,17 @@ package wire;
 public class WireProbe implements WireListener {
 	private Wire wire;
 	
-	public WireProbe(Wire wire) {
-		this.wire = wire;
-		this.wire.listenSignal(this);
+	public WireProbe(Wire wire) throws WireException {
+		if (wire != null) {
+			this.wire = wire;
+			try {
+				this.wire.listenSignal(this);
+			} catch (WireException e) {
+				e.printStackTrace();
+			}
+			return;
+		}
+		throw new WireException("wire is null");
 	}
 	
 	@Override

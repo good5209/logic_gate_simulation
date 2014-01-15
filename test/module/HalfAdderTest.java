@@ -8,7 +8,7 @@ import wire.*;
 
 public class HalfAdderTest extends TestCase {
 
-	public void testHalfAdder() {
+	public void testHalfAdder() throws WireException {
 		try {
 			Simulator sim = new Simulator();
 			Wire input1 = new Wire("input1");

@@ -7,7 +7,7 @@ import wire.*;
 
 public class DummyGateTest extends TestCase {
 
-	public void testDummyGate() {
+	public void testDummyGate() throws WireException {
 		try {
 			Simulator sim = new Simulator();
 			
