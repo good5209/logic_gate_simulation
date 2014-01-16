@@ -9,6 +9,82 @@ public class XorGateTest extends TestCase {
 
 	public void testXorGate() throws WireException {
 		try {
+			new XorGate(new Wire(), null, null);
+			assertFalse("An GateException should be thrown in XorGate", true);
+		} catch (GateException e) {
+			assertFalse(false);
+		}
+		
+		try {
+			new XorGate(null, new Wire(), null);
+			assertFalse("An GateException should be thrown in XorGate", true);
+		} catch (GateException e) {
+			assertFalse(false);
+		}
+		
+		try {
+			new XorGate(null, null, new Wire());
+			assertFalse("An GateException should be thrown in XorGate", true);
+		} catch (GateException e) {
+			assertFalse(false);
+		}
+		
+		try {
+			new XorGate(new Wire(), new Wire(), null);
+			assertFalse("An GateException should be thrown in XorGate", true);
+		} catch (GateException e) {
+			assertFalse(false);
+		}
+		
+		try {
+			new XorGate(new Wire(), null, new Wire());
+			assertFalse("An GateException should be thrown in XorGate", true);
+		} catch (GateException e) {
+			assertFalse(false);
+		}
+		
+		try {
+			new XorGate(null, new Wire(), new Wire());
+			assertFalse("An GateException should be thrown in XorGate", true);
+		} catch (GateException e) {
+			assertFalse(false);
+		}
+		
+		try {
+			new XorGate(null, null, null);
+			assertFalse("An GateException should be thrown in XorGate", true);
+		} catch (GateException e) {
+			assertFalse(false);
+		}
+		
+		try {
+			new XorGate(new Wire(), new Wire(), new Wire());
+			assertTrue(true);
+		} catch (GateException e) {
+			assertTrue("No GateException should be thrown in XorGate", false);
+		}
+	}
+	
+	public void testAddOnSimulator() {
+		try {
+			XorGate xorGate = new XorGate(new Wire(), new Wire(), new Wire());
+			xorGate.addOnSimulator(null);
+			assertFalse("An GateException should be thrown in XorGate", true);
+		} catch (GateException e) {
+			assertFalse(false);
+		}
+		
+		try {
+			XorGate xorGate = new XorGate(new Wire(), new Wire(), new Wire());
+			xorGate.addOnSimulator(new Simulator());
+			assertTrue(true);
+		} catch (GateException e) {
+			assertTrue("No GateException should be thrown in XorGate", false);
+		}
+	}
+	
+	public void testWireSignalChanged() throws WireException {
+		try {
 			Simulator sim = new Simulator();
 			Wire input1 = new Wire("input1");
 			Wire input2 = new Wire("input2");
@@ -39,27 +115,6 @@ public class XorGateTest extends TestCase {
 			assertTrue(false);
 		} catch (SimulateException e) {
 			assertTrue(false);
-		}
-		
-		try {
-			new NorGate(new Wire(), null, null);
-			assertFalse("An GateException should be thrown in NorGate", true);
-		} catch (GateException e) {
-			assertFalse(false);
-		}
-		
-		try {
-			new NorGate(new Wire(), new Wire(), null);
-			assertFalse("An GateException should be thrown in NorGate", true);
-		} catch (GateException e) {
-			assertFalse(false);
-		}
-		
-		try {
-			new NorGate(null, null, null);
-			assertFalse("An GateException should be thrown in NorGate", true);
-		} catch (GateException e) {
-			assertFalse(false);
 		}
 	}
 }

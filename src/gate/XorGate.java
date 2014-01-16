@@ -3,14 +3,13 @@ package gate;
 import java.util.LinkedList;
 
 import simulate.Simulator;
-import simulate.SimulateComponent;
 import wire.Wire;
 
 public class XorGate implements Gate {
-	private LinkedList<SimulateComponent> components;
+	private LinkedList<Gate> components;
 	
 	public XorGate(Wire input1, Wire input2, Wire output) throws GateException {
-		components = new LinkedList<SimulateComponent>();
+		components = new LinkedList<Gate>();
 		Wire mid1 = new Wire();
 		Wire mid2 = new Wire();
 		Wire mid3 = new Wire();
@@ -23,8 +22,8 @@ public class XorGate implements Gate {
 	}
 
 	@Override
-	public void addOnSimulator(Simulator simulator) {
-		for (SimulateComponent each : components) {
+	public void addOnSimulator(Simulator simulator) throws GateException {
+		for (Gate each : components) {
 			each.addOnSimulator(simulator);
 		}
 	}

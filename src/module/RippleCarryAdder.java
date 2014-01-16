@@ -2,6 +2,7 @@ package module;
 
 import java.util.LinkedList;
 
+import simulate.SimulateComponentException;
 import simulate.Simulator;
 import simulate.SimulateComponent;
 import gate.GateException;
@@ -31,7 +32,7 @@ public class RippleCarryAdder implements SimulateComponent {
 	}
 	
 	@Override
-	public void addOnSimulator(Simulator simulator) {
+	public void addOnSimulator(Simulator simulator) throws SimulateComponentException {
 		for (SimulateComponent each : adders) {
 			each.addOnSimulator(simulator);
 		}

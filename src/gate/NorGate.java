@@ -1,11 +1,10 @@
 package gate;
 
 import simulate.Simulator;
-import simulate.SimulateComponent;
 import wire.Wire;
 
 public class NorGate implements Gate {
-	private SimulateComponent orGate, notGate;
+	private Gate orGate, notGate;
 	
 	public NorGate(Wire input1, Wire input2, Wire output) throws GateException {
 		Wire mid = new Wire();
@@ -14,7 +13,7 @@ public class NorGate implements Gate {
 	}
 	
 	@Override
-	public void addOnSimulator(Simulator simulator) {
+	public void addOnSimulator(Simulator simulator) throws GateException {
 		orGate.addOnSimulator(simulator);
 		notGate.addOnSimulator(simulator);
 	}

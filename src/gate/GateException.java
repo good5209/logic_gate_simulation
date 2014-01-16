@@ -1,7 +1,9 @@
 package gate;
 
+import simulate.SimulateComponentException;
+
 @SuppressWarnings("serial")
-public class GateException extends Exception {
+public class GateException extends SimulateComponentException {
 	public GateException() {}
 	
 	/**

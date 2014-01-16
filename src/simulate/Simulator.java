@@ -18,7 +18,11 @@ public class Simulator {
 	 */
 	public void addComponent(SimulateComponent component) throws SimulateException {
 		if (component != null) {
-			component.addOnSimulator(this);
+			try {
+				component.addOnSimulator(this);
+			} catch (SimulateComponentException e) {
+				e.printStackTrace();
+			}
 			return;
 		}
 		throw new SimulateException("add component is null");
@@ -47,6 +51,14 @@ public class Simulator {
 	 */
 	public boolean hasWork() {
 		return workQueue.hasWork();
+	}
+	
+	/**
+	 * work queue size
+	 * @return
+	 */
+	public int workSize() {
+		return workQueue.workSize();
 	}
 	
 	/**

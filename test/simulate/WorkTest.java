@@ -65,10 +65,13 @@ public class WorkTest extends TestCase {
 					throw new RuntimeException();
 				}
 			});
+			assertTrue(true);
 			work.invoke();
-			assertFalse("An RuntimeException should be thrown in invokeWork", true);
-		} catch (Exception e) {
-			assertFalse(false);
+			assertTrue("An RuntimeException should be thrown in invokeWork", false);
+		} catch (WorkException e) {
+			assertTrue("No WorkException should be thrown in Work", false);
+		} catch (RuntimeException e) {
+			assertTrue(true);
 		}
 	}
 }

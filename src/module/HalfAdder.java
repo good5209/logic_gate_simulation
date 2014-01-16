@@ -1,5 +1,6 @@
 package module;
 
+import simulate.SimulateComponentException;
 import simulate.Simulator;
 import simulate.SimulateComponent;
 import gate.*;
@@ -18,7 +19,7 @@ public class HalfAdder implements SimulateComponent {
 	}
 
 	@Override
-	public void addOnSimulator(Simulator simulator) {
+	public void addOnSimulator(Simulator simulator) throws SimulateComponentException {
 		xorGate.addOnSimulator(simulator);
 		andGate.addOnSimulator(simulator);
 	}

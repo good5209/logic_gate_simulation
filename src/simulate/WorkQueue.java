@@ -68,4 +68,12 @@ class WorkQueue {
 	public boolean hasWork() {
 		return !queue.isEmpty();
 	}
+	
+	/**
+	 * queue work size
+	 * @return
+	 */
+	public int workSize() {
+		return queue.size();
+	}
 }

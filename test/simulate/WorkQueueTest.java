@@ -4,7 +4,8 @@ import junit.framework.TestCase;
 
 public class WorkQueueTest extends TestCase {
 	public void testWorkQueue() {
-		new WorkQueue();
+		WorkQueue queue = new WorkQueue();
+		assertEquals(false, queue.hasWork());
 	}
 	
 	public void testAdd() {
@@ -25,6 +26,7 @@ public class WorkQueueTest extends TestCase {
 				@Override
 				public void invoke() {}
 			}));
+			assertEquals(true, queue.hasWork());
 			assertTrue(true);
 		} catch (WorkException e) {
 			assertTrue("No WorkException should be thrown in WorkQueue", false);
@@ -86,7 +88,7 @@ public class WorkQueueTest extends TestCase {
 	public void testNextTime() throws WorkException {
 		WorkQueue queue = new WorkQueue();
 		try {
-			assertEquals(-1, queue.nextTime());
+			queue.nextTime();
 			assertFalse("An WorkException should be thrown in WorkQueue", true);
 		} catch (WorkException e) {
 			assertFalse(false);
@@ -110,10 +112,13 @@ public class WorkQueueTest extends TestCase {
 		}));
 		try {
 			assertEquals(0, queue.nextTime());
+			
 			queue.pop();
 			assertEquals(0, queue.nextTime());
+			
 			queue.pop();
 			assertEquals(1, queue.nextTime());
+			
 			queue.pop();
 			assertEquals(2, queue.nextTime());
 			queue.pop();
@@ -143,5 +148,67 @@ public class WorkQueueTest extends TestCase {
 		assertEquals(true, queue.hasWork());
 		queue.pop();
 		assertEquals(false, queue.hasWork());
+	}
+	
+	public void testWorkSize() throws WorkException {
+		WorkQueue queue = new WorkQueue();
+		assertEquals(0, queue.workSize());
+		queue.add(new Work(0, new SimulateAction() {
+			@Override
+			public void invoke() {}
+		}));
+		assertEquals(1, queue.workSize());
+	}
+	
+	public void testClassLevel() throws WorkException {
+		// path1: E -> N -> E -> N -> E
+		WorkQueue queue = new WorkQueue(); // def0
+		assertEquals(0, queue.workSize());
+		queue.add(new Work(0, new SimulateAction() { // def0, use1
+			@Override
+			public void invoke() {}
+		}));
+		assertEquals(1, queue.workSize());
+		queue.pop(); // def1, use4
+		assertEquals(0, queue.workSize());
+		queue.add(new Work(0, new SimulateAction() { // def4, use1
+			@Override
+			public void invoke() {}
+		}));
+		assertEquals(1, queue.workSize());
+		queue.pop(); // def1, use4
+		assertEquals(0, queue.workSize());
+		
+		// path2: E -> N -> aN -> aN -> pN -> aN -> pN -> pN -> E
+		queue = new WorkQueue(); // def0
+		assertEquals(0, queue.workSize());
+		queue.add(new Work(0, new SimulateAction() { // def0, use1
+			@Override
+			public void invoke() {}
+		}));
+		assertEquals(1, queue.workSize());
+		queue.add(new Work(0, new SimulateAction() { // def1, use2
+			@Override
+			public void invoke() {}
+		}));
+		assertEquals(2, queue.workSize());
+		queue.add(new Work(0, new SimulateAction() { // def2, use2
+			@Override
+			public void invoke() {}
+		}));
+		assertEquals(3, queue.workSize());
+		queue.pop(); // def2, use3
+		assertEquals(2, queue.workSize());
+		queue.add(new Work(0, new SimulateAction() { // def3, use2
+			@Override
+			public void invoke() {}
+		}));
+		assertEquals(3, queue.workSize());
+		queue.pop(); // def2, use3
+		assertEquals(2, queue.workSize());
+		queue.pop(); // def3, use3
+		assertEquals(1, queue.workSize());
+		queue.pop(); // def3, use4
+		assertEquals(0, queue.workSize());
 	}
 }

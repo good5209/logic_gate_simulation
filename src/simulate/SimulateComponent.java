@@ -8,5 +8,5 @@ public interface SimulateComponent {
 	 * add component to simulator
 	 * @param simulator
 	 */
-	public void addOnSimulator(Simulator simulator);
+	public void addOnSimulator(Simulator simulator) throws SimulateComponentException;
 }

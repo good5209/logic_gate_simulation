@@ -90,4 +90,54 @@ public class WireTest extends TestCase {
 			assertFalse(false);
 		}
 	}
+	
+	public void testClassLevel() throws WireException {
+		Wire wire = new Wire(); // def0
+		final Counter counter = new Counter();
+		wire.listenSignal(new WireListener() { // def0, use1
+			@Override
+			public void wireSignalChanged() {
+				counter.add();
+			}
+		});
+		wire.setSignal(!wire.getSignal());
+		assertEquals(1, counter.get());
+		counter.reset();
+		
+		wire.listenSignal(new WireListener() { // def1, use2
+			@Override
+			public void wireSignalChanged() {
+				counter.add();
+			}
+		});
+		wire.setSignal(!wire.getSignal());
+		assertEquals(2, counter.get());
+		counter.reset();
+		
+		wire.listenSignal(new WireListener() { // def2, use2
+			@Override
+			public void wireSignalChanged() {
+				counter.add();
+			}
+		});
+		wire.setSignal(!wire.getSignal());
+		assertEquals(3, counter.get());
+		counter.reset();
+	}
+	
+	private class Counter {
+		int count = 0;
+		
+		public void add() {
+			count += 1;
+		}
+		
+		public int get() {
+			return count;
+		}
+		
+		public void reset() {
+			count = 0;
+		}
+	}
 }

@@ -35,9 +35,13 @@ public class AndGate implements Gate {
 	}
 	
 	@Override
-	public void addOnSimulator(Simulator simulator) {
-		this.simulator = simulator;
-		wireSignalChanged(); // add initial work
+	public void addOnSimulator(Simulator simulator) throws GateException {
+		if (simulator != null) {
+			this.simulator = simulator;
+			wireSignalChanged(); // add initial work
+			return;
+		}
+		throw new GateException("simulator is null");
 	}
 	
 	@Override
