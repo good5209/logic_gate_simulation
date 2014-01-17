@@ -64,21 +64,24 @@ public class WireArray {
 	 * http://zh.wikipedia.org/zh-tw/%E4%BA%8C%E8%A3%9C%E6%95%B8
 	 */
 	private static boolean[] longToBit(long value, int num) throws WireException {
-		int valueBit = 0;
-		long temp = Math.abs(value);
-		while (temp != 0L) {
-			temp = temp >> 1;
-			valueBit++;
+		if (num > 0) {
+			int valueBit = 0;
+			long temp = Math.abs(value);
+			while (temp != 0L) {
+				temp = temp >> 1;
+				valueBit++;
+			}
+			if (valueBit > num) {
+				throw new WireException("value need more bits to representation");
+			}
+			
+			boolean[] result = new boolean[num];
+			for (int i = 0; i < num; i++) {
+				result[i] = (value & (1L << i)) != 0;
+			}
+			return result;
 		}
-		if (valueBit > num) {
-			throw new WireException("value need more bits to representation");
-		}
-		
-		boolean[] result = new boolean[num];
-		for (int i = 0; i < num; i++) {
-			result[i] = (value & (1L << i)) != 0;
-		}
-		return result;
+		throw new WireException("wire length must bigger then zero");
 	}
 	
 	// TODO need two complete number to support negative
@@ -92,6 +95,6 @@ public class WireArray {
 			}
 			return result;
 		}
-		throw new WireException("value too big");
+		throw new WireException("long cannot represent value");
 	}
 }

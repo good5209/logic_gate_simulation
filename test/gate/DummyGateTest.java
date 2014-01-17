@@ -81,5 +81,12 @@ public class DummyGateTest extends TestCase {
 		} catch (SimulateException e) {
 			assertTrue(false);
 		}
+		
+		try {
+			DummyGate gate = new DummyGate(new Wire(), new Wire());
+			gate.wireSignalChanged();
+		} catch (GateException e) {
+			assertTrue(false);
+		}
 	}
 }

@@ -125,5 +125,12 @@ public class OrGateTest extends TestCase {
 		} catch (SimulateException e) {
 			assertTrue(false);
 		}
+		
+		try {
+			OrGate gate = new OrGate(new Wire(), new Wire(), new Wire());
+			gate.wireSignalChanged();
+		} catch (GateException e) {
+			assertTrue(false);
+		}
 	}
 }

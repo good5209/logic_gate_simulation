@@ -125,5 +125,12 @@ public class AndGateTest extends TestCase {
 		} catch (SimulateException e) {
 			assertTrue(false);
 		}
+		
+		try {
+			AndGate gate = new AndGate(new Wire(), new Wire(), new Wire());
+			gate.wireSignalChanged();
+		} catch (GateException e) {
+			assertTrue(false);
+		}
 	}
 }

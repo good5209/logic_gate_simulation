@@ -37,10 +37,10 @@ public class Simulator {
 		if (delay >= 0 && action != null) {
 			try {
 				workQueue.add(new Work(time + delay, action));
-				return;
 			} catch (WorkException e) {
 				e.printStackTrace();
 			}
+			return;
 		}
 		throw new SimulateException("add gate action failure");
 	}
@@ -113,7 +113,7 @@ public class Simulator {
 					}
 					next();
 				} catch (WorkException e) {
-					throw new SimulateException("runUntil internal error");
+					e.printStackTrace();
 				}
 			}
 			if (hasWork()) {

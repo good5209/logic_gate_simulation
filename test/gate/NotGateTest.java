@@ -100,5 +100,12 @@ public class NotGateTest extends TestCase {
 		} catch (SimulateException e) {
 			assertTrue(false);
 		}
+		
+		try {
+			NotGate gate = new NotGate(new Wire(), new Wire());
+			gate.wireSignalChanged();
+		} catch (GateException e) {
+			assertTrue(false);
+		}
 	}
 }

@@ -116,5 +116,12 @@ public class NorGateTest extends TestCase {
 		} catch (SimulateException e) {
 			assertTrue(false);
 		}
+		
+		try {
+			NorGate gate = new NorGate(new Wire(), new Wire(), new Wire());
+			gate.wireSignalChanged();
+		} catch (GateException e) {
+			assertTrue(false);
+		}
 	}
 }

@@ -56,7 +56,22 @@ public class WireArrayTest extends TestCase {
 			assertFalse(false);
 		}
 		
-		// TODO, WireArray.setValue(Long.MAX_VALUE + 1, )
+		try {
+			WireArray.setValue(0, new Wire[0]);
+			assertFalse("An WireException should be thrown in getValue", true);
+		} catch (WireException e) {
+			assertFalse(false);
+		}
+		
+		/*
+		 * Long.MAX_VALUE + 1 is invalid
+		try {
+			WireArray.setValue(Long.MAX_VALUE + 1, WireArray.wireArray(65));
+			assertFalse("An WireException should be thrown in getValue", true);
+		} catch (WireException e1) {
+			assertFalse(false);
+		}
+		*/
 		
 		try {
 			Wire[] wires = WireArray.wireArray(1); // 1 bit
@@ -117,6 +132,24 @@ public class WireArrayTest extends TestCase {
 			assertTrue(true);
 		} catch (WireException e) {
 			assertTrue("No WireException should be thrown in getValue", false);
+		}
+		
+		try {
+			WireArray.getValue(new Wire[0]);
+			assertFalse("An WireException should be thrown in getValue", true);
+		} catch (WireException e) {
+			assertFalse(false);
+		}
+		
+		try {
+			Wire[] wires = new Wire[Long.SIZE + 1];
+			for (int i = 0; i < wires.length; i++) {
+				wires[i] = new Wire();
+			}
+			WireArray.getValue(wires);
+			assertFalse("An WireException should be thrown in getValue", true);
+		} catch (WireException e) {
+			assertFalse(false);
 		}
 	}
 }

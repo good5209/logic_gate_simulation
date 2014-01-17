@@ -33,8 +33,6 @@ public class Wire {
 		if (this.signal != signal) {
 			this.signal = signal;
 			notifyListener();
-		} else {
-			this.signal = signal;
 		}
 	}
 	
