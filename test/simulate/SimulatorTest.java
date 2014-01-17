@@ -62,6 +62,13 @@ public class SimulatorTest extends TestCase {
 		}
 		
 		try {
+			sim.addAction(-1, null);
+			assertFalse("An SimulateException should be thrown in Simulator", true);
+		} catch (SimulateException e) {
+			assertFalse(false);
+		}
+		
+		try {
 			sim.addAction(0, new SimulateAction() {
 				@Override
 				public void invoke() {}

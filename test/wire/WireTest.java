@@ -19,6 +19,10 @@ public class WireTest extends TestCase {
 		assertEquals(false, wire.getSignal()); // default signal
 		wire.setSignal(true);
 		assertEquals(true, wire.getSignal());
+		wire.setSignal(true);
+		assertEquals(true, wire.getSignal());
+		wire.setSignal(false);
+		assertEquals(false, wire.getSignal());
 		wire.setSignal(false);
 		assertEquals(false, wire.getSignal());
 	}
